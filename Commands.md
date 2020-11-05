@@ -47,4 +47,52 @@ Delete the secret
 
     vault kv delete secret/hello
 
+Enable the secret engine
    
+    vault secrets enable -path=kv kv
+    Each path is completely isolated and cannot talk to other paths. 
+ 
+To list out information about seret engines
+
+    vault secrets list
+
+Disabling a secret engine
+
+    vault secrets disable <secret-engine>/
+    
+Configuring Vault
+
+  HCL files are used.
+  ```
+  storage "raft" {
+  path    = "./vault/data"
+  node_id = "node1"
+  }
+
+  listener "tcp" {
+  address     = "127.0.0.1:8200"
+  tls_disable = 1
+  }
+  disable_mlock = true
+  api_addr = "http://127.0.0.1:8200"
+  cluster_addr = "https://127.0.0.1:8201"
+  ui = true
+  ```
+  
+  Set the -config flag to point to the proper path where you saved the configuration above.
+
+       vault server -config=config.hcl
+       
+  During initialization, the encryption keys are generated, unseal keys are created, and the initial root token is setup. To initialize Vault use
+      
+       vault init 
+   
+  Every initialized Vault server starts in the sealed state.  So we shall unseal it.
+   
+       vault operator unseal
+       
+  Finally, authenticate as the initial root token
+   
+       vault login <token>
+
+
