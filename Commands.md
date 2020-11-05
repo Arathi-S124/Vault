@@ -2,13 +2,16 @@
 ### Installation in Linux
 
 1. Add the Hasicorp  GPG Key
- curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+       
+       curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
  
 2. Add the official linux directory of HashiCorp
-  sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+  
+       sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
   
 3. Now update and start install
-  sudo apt-get update && sudo apt-get install vault
+  
+       sudo apt-get update && sudo apt-get install vault
   
 Type the "vault" command to check the installation.
 
