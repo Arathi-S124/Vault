@@ -1,5 +1,5 @@
 
-#### Installation in Linux
+### Installation in Linux
 
 1. Add the Hasicorp  GPG Key
  curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
@@ -12,7 +12,7 @@
   
 Type the "vault" command to check the installation.
 
-#### Starting Server
+### Starting Server
 For beginning we have chosen to setup a dev server.
 It is a built-in, pre-configured server that is not very secure but useful for exploring Vault locally.
 
@@ -32,6 +32,7 @@ To check your server run
      
      vault status
 
+### Secrets
 We shall write a secret by command
 
      vault kv put <path> <key>=<value>  [Path is secret/, key can be value and value is assigned to this key]
@@ -60,9 +61,9 @@ Disabling a secret engine
 
     vault secrets disable <secret-engine>/
     
-Configuring Vault
+### Deploy Vault
 
-  HCL files are used.
+  For configuring vault HCL files are used.
   ```
   storage "raft" {
   path    = "./vault/data"
@@ -95,4 +96,21 @@ Configuring Vault
    
        vault login <token>
 
+### AWS AND Secret
+  Configuring Vault to AWS
+
+        vault secrets enable -path=<path> aws
+        vault write aws/config/root access_key <access key> secret_key <secret key> region=<region>  
+        
+   Create role and attach a policy
+        
+        vault write aws/role/<role name> credential_type=<credential type> policy_document=-<<EOF <policy> EOF  
+   
+   You can generate the new access and secret access key
+        
+        vault read aws/role/<role name>           
+   
+   Revoking the specified secret
+        
+        vault lease revoke <lease id>                                                                        
 
